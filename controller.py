@@ -21,6 +21,7 @@ from viewCharts import ViewCharts
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtChart import QLineSeries
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor
 from functools import partial
 from scipy import signal
 import sys
@@ -40,6 +41,8 @@ class Controller:
         self.changesStart = []
         self.changesTrigger = []
         self.dataSensor = []
+        self.timeSensor = []
+        self.valueSensor = []
         self.photodiode_1 = []
         self.photodiode_2 = []
         self.photodiode_3 = []
@@ -59,7 +62,11 @@ class Controller:
         self.photodiodes = []
         # self.photodiodeFiltered = None
         self.lenghtPhotodiode = None
-        self.colors = [Qt.blue, Qt.red, Qt.green, Qt.darkMagenta, Qt.darkYellow]
+        # self.colors = [Qt.blue, Qt.red, Qt.green, Qt. Qt.darkMagenta, Qt.darkYellow]
+        self.colors = [QColor(192, 57, 43), QColor(142, 68, 173), QColor(41, 128, 185), QColor(22, 160, 133),
+                       QColor(46, 204, 113), QColor(243, 156, 18), QColor(211, 84, 0), QColor(98, 101, 103),
+                       QColor(127, 140, 141), QColor(44, 62, 80), QColor(100, 30, 22), QColor(23, 32, 42),
+                       QColor(125, 102, 8), QColor(14, 98, 81), QColor(20, 90, 50), QColor(27, 79, 114)]
         self.fileLoaded = False
 
         self.view = View(None)
@@ -77,12 +84,12 @@ class Controller:
         self.view.btnExit.clicked.connect(self.exit_App)
         self.view.btnLoadFile.clicked.connect(self.loadFile)
 
-        for i in range(0, 5):
+        for i in range(0, 16):
             self.view.btnPhotodiodes[i].clicked.connect(partial(self.btnPhotodiode, n=i))
             self.view.btnPhotodiodeFilter[i].clicked.connect(partial(self.btnPhotodiodeFilter, n=i))
 
-        self.view.btnPhotodiodes[5].clicked.connect(self.btnAllPhotodiodes)
-        self.view.btnPhotodiodeFilter[5].clicked.connect(self.btnFilterAll)
+        self.view.btnPhotodiodes[16].clicked.connect(self.btnAllPhotodiodes)
+        self.view.btnPhotodiodeFilter[16].clicked.connect(self.btnFilterAll)
         self.view.btnSaveFile.clicked.connect(self.saveDataSensor)
 
     def loadFile(self):
@@ -103,11 +110,13 @@ class Controller:
                 for row in reader:
                     if i == 2:
                         nameColumn = row
+
                         for l in range(0, len(nameColumn)):
+
                             if nameColumn[l].find('Sensor') != -1:
                                 iSensor = l
 
-                            elif nameColumn[l].find('Start') != -1:
+                            if nameColumn[l].find('Start') != -1:
                                 iStart = l
 
                             elif nameColumn[l].find('Trigger') != -1:
@@ -144,7 +153,7 @@ class Controller:
         self.viewChart.exec_()
 
     def btnAllPhotodiodes(self):
-        for i in range(0, 5):
+        for i in range(0, 16):
             x = list(range(len(self.photodiodes[i])))
             self.addDataCharts(x, self.photodiodes[i], "Photodiode " + str(i+1), i, color=self.colors[i])
 
@@ -367,7 +376,7 @@ class Controller:
         self.photodiodes.append(self.photodiode_15)
         self.photodiodes.append(self.photodiode_16)
 
-        for i in range(0, 6):
+        for i in range(0, 17):
             self.view.btnPhotodiodes[i].setEnabled(True)
             self.view.btnPhotodiodeFilter[i].setEnabled(True)
 

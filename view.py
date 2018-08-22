@@ -27,7 +27,7 @@ class View(QWidget):
         self.btnPhotodiodes = []
         self.btnPhotodiodeFilter = []
 
-        for i in range(0, 5):
+        for i in range(0, 16):
             self.btnPhotodiodes.append(QPushButton("Photodiode " + str(i+1)))
             self.btnPhotodiodes[i].setEnabled(False)
 
@@ -35,10 +35,10 @@ class View(QWidget):
             self.btnPhotodiodeFilter[i].setEnabled(False)
 
         self.btnPhotodiodes.append(QPushButton("All Photodiodes"))
-        self.btnPhotodiodes[5].setEnabled(False)
+        self.btnPhotodiodes[16].setEnabled(False)
 
         self.btnPhotodiodeFilter.append(QPushButton("Filter All"))
-        self.btnPhotodiodeFilter[5].setEnabled(False)
+        self.btnPhotodiodeFilter[16].setEnabled(False)
 
         self.btnLoadFile = QPushButton('Load File')
         self.btnSaveFile = QPushButton('Save Data')
@@ -74,7 +74,7 @@ class View(QWidget):
         self.layoutGrid.addWidget(self.btnExit, 1, 1)
 
     def setButtonsGroup(self):
-        for i in range(0, 6):
+        for i in range(0, 17):
             self.buttonsLayout.addWidget(self.btnPhotodiodes[i], i, 0)
             self.buttonsLayout.addWidget(self.btnPhotodiodeFilter[i], i, 1)
 
@@ -139,7 +139,7 @@ class View(QWidget):
 
     def setMessageSave(self):
         saveData = QMessageBox.question(self, "Question", "Do you want to save the data?",
-                                       QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 
         if saveData == QMessageBox.Yes:
             return True

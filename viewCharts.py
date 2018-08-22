@@ -34,7 +34,7 @@ class ViewCharts(QDialog):
         self.axisX = QValueAxis()
         self.axisY = QValueAxis()
 
-        for i in range(0, 5):
+        for i in range(0, 16):
             self.charts.append(QChart())
             self.chartsView.append(QChartView(self.charts[i]))
 
@@ -58,8 +58,17 @@ class ViewCharts(QDialog):
         self.layoutGrid.addWidget(self.setChartGroup(), 0, 0)
 
     def setChartGroup(self):
-        for i in range(0, 5):
-            self.chartsLayout.addWidget(self.chartsView[i], i, 0)
+        i = 0
+        r = 0
+        # for i in range(0, 16):
+        while i < 16:
+
+            for k in range(0, 3):
+                if (i+k) < 16:
+                    self.chartsLayout.addWidget(self.chartsView[i+k], r, k)
+
+            i += 3
+            r += 1
 
         self.resize(1500, 875)
         self.centerWindowOnScreen()
@@ -81,7 +90,7 @@ class ViewCharts(QDialog):
     def setCharts(self):
         m = 1
 
-        for i in range(0, 5):
+        for i in range(0, 16):
             self.chartsView[i].setRenderHint(QPainter.Antialiasing)
             self.charts[i].legend().setVisible(False)
             self.charts[i].legend().setAlignment(Qt.AlignBottom)
@@ -95,7 +104,7 @@ class ViewCharts(QDialog):
     def setChartsFilter(self):
         m = 1
 
-        for i in range(0, 5):
+        for i in range(0, 16):
             self.chartsView[i].setRenderHint(QPainter.Antialiasing)
             self.charts[i].legend().setVisible(False)
             self.charts[i].legend().setAlignment(Qt.AlignBottom)
