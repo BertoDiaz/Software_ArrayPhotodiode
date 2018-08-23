@@ -186,7 +186,7 @@ class Controller:
         self.viewCharts.charts[m].createDefaultAxes()
 
     def addMultipleDataCharts(self, xdata, ydata):
-        for m in range(0, 5):
+        for m in range(0, 16):
             curve_1 = QLineSeries()
             curve_2 = QLineSeries()
             pen_1 = curve_1.pen()
@@ -409,7 +409,7 @@ class Controller:
 
         b, a = signal.butter(1, 0.5)
 
-        for i in range(0, 5):
+        for i in range(0, 16):
             photodiodeFiltered.append(signal.filtfilt(b, a, self.photodiodes[i]))
 
         lenghtPhotodiodeFiltered = len(photodiodeFiltered[0])
